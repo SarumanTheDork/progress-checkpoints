@@ -1,67 +1,420 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <title>Progress Checkpoints</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #f8f9fa;
-      color: #222;
-      padding: 30px;
-    }
-    h2 {
-      margin-top: 40px;
-      color: #333;
-    }
-    .checkpoint {
-      background: #fff;
-      border: 1px solid #ddd;
-      border-radius: 8px;
-      padding: 20px;
-      margin-bottom: 20px;
-    }
-    .task {
-      display: flex;
-      align-items: center;
-      margin-bottom: 10px;
-    }
-    .task input[type="checkbox"] {
-      margin-right: 10px;
-      transform: scale(1.2);
-    }
-    .done {
-      text-decoration: line-through;
-      color: #888;
-    }
-  </style>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Progress Checkpoints</title>
+
+<!-- Inter font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+
+<style>
+  :root{
+    --bg1: #0f1724; /* deep navy */
+    --bg2: #071229; /* darker */
+    --card: rgba(255,255,255,0.06);
+    --muted: #a0a7b7;
+    --accent1: #6ee7b7; /* mint */
+    --accent2: #60a5fa; /* sky */
+    --danger: #ff6b6b;
+    --glass: rgba(255,255,255,0.04);
+    --glass-2: rgba(255,255,255,0.03);
+    --card-border: rgba(255,255,255,0.06);
+    color-scheme: dark;
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  }
+
+  html,body { height:100%; margin:0; background: linear-gradient(180deg,var(--bg1),var(--bg2)); -webkit-font-smoothing:antialiased; -moz-osx-font-smoothing:grayscale; color:#e6eef8; }
+
+  .wrap { max-width:1100px; margin:32px auto; padding:28px; box-sizing:border-box; }
+
+  header {
+    display:flex; gap:18px; align-items:center; justify-content:space-between;
+    margin-bottom:18px;
+  }
+  .brand {
+    display:flex; gap:14px; align-items:center;
+  }
+  .logo {
+    width:56px; height:56px; border-radius:12px;
+    background: linear-gradient(135deg,var(--accent1),var(--accent2));
+    display:flex; align-items:center; justify-content:center; font-weight:700; color:#042;
+    box-shadow: 0 6px 18px rgba(6,11,20,0.6), inset 0 -6px 14px rgba(255,255,255,0.06);
+  }
+  .title { font-size:18px; font-weight:700; letter-spacing:0.2px; }
+  .subtitle { font-size:12px; color:var(--muted); margin-top:4px; }
+
+  .controls { display:flex; gap:10px; align-items:center; }
+  button, .btn {
+    background:var(--glass); border:1px solid var(--card-border); color:#e6eef8;
+    padding:8px 12px; border-radius:10px; cursor:pointer; font-weight:600; font-size:13px;
+    transition: transform .12s ease, box-shadow .12s ease;
+  }
+  button:active { transform: translateY(1px); }
+  .btn.primary { background: linear-gradient(90deg,var(--accent1),var(--accent2)); color:#042; box-shadow: 0 6px 24px rgba(60,110,150,0.16); border:0; }
+
+  .grid { display:grid; grid-template-columns: 360px 1fr; gap:20px; align-items:start; }
+
+  .panel {
+    background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+    border:1px solid var(--card-border); border-radius:14px; padding:18px; box-shadow: 0 8px 30px rgba(3,6,12,0.45);
+  }
+
+  /* left column */
+  .summary { display:flex; flex-direction:column; gap:14px; align-items:stretch; }
+  .ring {
+    display:flex; gap:12px; align-items:center;
+  }
+  .ring-visual {
+    width:120px; height:120px; display:grid; place-items:center;
+    background: conic-gradient(var(--accent1) var(--p,0%), rgba(255,255,255,0.06) 0%);
+    border-radius:999px; position:relative;
+    box-shadow: inset 0 -8px 18px rgba(0,0,0,0.4);
+  }
+  .ring-visual::after {
+    content:""; width:88px; height:88px; border-radius:999px; background:linear-gradient(180deg,var(--glass),transparent); position:absolute;
+  }
+  .ring-label { position:relative; z-index:2; text-align:center; font-weight:700; font-size:18px; color:#e6eef8; }
+  .stats { color:var(--muted); font-size:13px; }
+
+  .progress-bar {
+    height:12px; background:var(--glass-2); border-radius:999px; overflow:hidden; border:1px solid rgba(255,255,255,0.02);
+  }
+  .progress-bar > i { display:block; height:100%; width:0%; background: linear-gradient(90deg,var(--accent2),var(--accent1)); transition: width .45s cubic-bezier(.2,.9,.25,1); }
+
+  /* right column */
+  .tasks { display:flex; flex-direction:column; gap:12px; }
+  .checkpoint-card { padding:14px; border-radius:12px; border:1px solid rgba(255,255,255,0.03); background: linear-gradient(180deg, rgba(255,255,255,0.02), transparent); }
+  .checkpoint-head { display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:10px; }
+  .checkpoint-title { font-weight:700; color:#e9f5ff; }
+  .task-list { display:flex; flex-direction:column; gap:8px; }
+
+  .task-row {
+    display:flex; align-items:center; gap:12px; background: rgba(255,255,255,0.015); padding:10px; border-radius:10px;
+    border:1px solid rgba(255,255,255,0.02);
+  }
+
+  .task-row input[type="checkbox"] { width:20px; height:20px; accent-color: var(--accent1); transform:scale(1.12); }
+  .task-text { flex:1; font-weight:600; color:#e8f1ff; }
+  .task-text.done { text-decoration: line-through; color:#9aa6b9; font-weight:500; }
+
+  .tiny { font-size:12px; color:var(--muted); }
+  .actions { display:flex; gap:8px; align-items:center; }
+
+  .add-row { display:flex; gap:8px; margin-top:10px; }
+  input.add-input {
+    flex:1; padding:10px; border-radius:10px; border:1px solid rgba(255,255,255,0.03);
+    background:transparent; color:#eaf5ff; outline: none; font-weight:600;
+  }
+
+  .ghost { opacity:0.6; font-weight:600; }
+
+  footer.meta { margin-top:14px; display:flex; gap:12px; align-items:center; justify-content:space-between; color:var(--muted); font-size:13px; }
+
+  @media (max-width:980px){
+    .grid { grid-template-columns: 1fr; }
+    .logo { width:44px; height:44px; font-size:16px; }
+  }
+
+  /* small micro animation when a task is checked */
+  .task-row input:checked ~ .spark {
+    transform: scale(1); opacity:1;
+  }
+  .spark {
+    width:12px; height:12px; border-radius:999px; background: radial-gradient(circle,#fff,rgba(255,255,255,0.08));
+    margin-left:6px; opacity:0; transform:scale(0.6); transition: all .28s cubic-bezier(.2,.9,.25,1);
+  }
+
+  .kbd { background: rgba(255,255,255,0.02); padding:6px 8px; border-radius:8px; border:1px solid rgba(255,255,255,0.02); font-weight:600; font-size:12px; color:var(--muted); }
+
+</style>
 </head>
 <body>
-  <h1>Progress Checkpoints</h1>
+<div class="wrap">
+  <header>
+    <div class="brand">
+      <div class="logo">PC</div>
+      <div>
+        <div class="title">Progress Checkpoints</div>
+        <div class="subtitle">Day 30, 60, 90 tracker with live progress</div>
+      </div>
+    </div>
 
-  <div class="checkpoint">
-    <h2>Day 30 (Oct 28, 2025)</h2>
-    <div class="task"><input type="checkbox" /> <span>SqueezeGrowth: +5 new monetizable articles</span></div>
-    <div class="task"><input type="checkbox" /> <span>SqueezeGrowth: 8 refreshed</span></div>
-    <div class="task"><input type="checkbox" /> <span>TopHumanOS: 4 pillar articles</span></div>
-    <div class="task"><input type="checkbox" /> <span>TopHumanOS: 4 newsletters</span></div>
-    <div class="task"><input type="checkbox" /> <span>Metrics: SG traffic stable or +5%</span></div>
-    <div class="task"><input type="checkbox" /> <span>Metrics: THOS 100 visits/week</span></div>
-  </div>
+    <div class="controls">
+      <button class="btn" id="exportBtn" title="Export JSON">Export</button>
+      <button class="btn" id="resetBtn" title="Reset progress">Reset</button>
+      <button class="btn primary" id="addCheckpointBtn">Add task</button>
+    </div>
+  </header>
 
-  <div class="checkpoint">
-    <h2>Day 60 (Nov 27, 2025)</h2>
-    <div class="task"><input type="checkbox" /> <span>SqueezeGrowth: 10 new + 15 refreshed money posts</span></div>
-    <div class="task"><input type="checkbox" /> <span>TopHumanOS: 8 pillar articles</span></div>
-    <div class="task"><input type="checkbox" /> <span>TopHumanOS: 8 newsletters</span></div>
-    <div class="task"><input type="checkbox" /> <span>TopHumanOS: 300+ subs</span></div>
-    <div class="task"><input type="checkbox" /> <span>Metrics: SG traffic +15%</span></div>
-    <div class="task"><input type="checkbox" /> <span>Metrics: THOS hitting 1k/month</span></div>
-  </div>
+  <main class="grid">
+    <section class="panel summary">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-weight:700;font-size:15px">Overview</div>
+          <div class="tiny">Live progress across all checkpoints</div>
+        </div>
+        <div class="tiny">Saved in browser</div>
+      </div>
 
-  <div class="checkpoint">
-    <h2>Day 90 (Dec 27, 2025)</h2>
-    <div class="task"><input type="checkbox" /> <span>SqueezeGrowth: 20 new + 20 refreshed posts total</span></div>
-    <div class="task"><input type="checkbox" /> <span>TopHumanOS: 12–15 pillar articles</span></div>
-    <div class="task"><input type="checkbox" /> <span>TopHumanOS: 12 newsletters</span></div>
-    <div class="task"><input type="checkbox" />
+      <div class="ring">
+        <div class="ring-visual" id="ring" aria-hidden="true">
+          <div class="ring-label" id="ringLabel">0%</div>
+        </div>
+
+        <div style="flex:1">
+          <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px">
+            <div class="stats" id="counts">0 done · 0 total</div>
+            <div class="stats" id="eta">ETA: —</div>
+          </div>
+          <div class="progress-bar" aria-hidden="true">
+            <i id="bar"></i>
+          </div>
+        </div>
+      </div>
+
+      <div style="display:flex;gap:10px;align-items:center;flex-wrap:wrap">
+        <div class="kbd" id="donePct">0% complete</div>
+        <div class="kbd" id="totalTasks">0 tasks</div>
+        <div class="kbd" id="checkpointsCount">0 checkpoints</div>
+      </div>
+
+      <footer class="meta">
+        <div>Last saved: <span id="lastSaved">never</span></div>
+        <div class="tiny">Local only</div>
+      </footer>
+    </section>
+
+    <section class="panel tasks" id="checkpointsRoot">
+      <!-- Checkpoint cards will be injected here -->
+    </section>
+  </main>
+</div>
+
+<script>
+  // STORAGE KEY
+  const KEY = 'progress_checkpoints_v2';
+
+  // default data
+  const defaultData = [
+    {
+      id: 'day30',
+      title: 'Day 30 (Oct 28, 2025)',
+      tasks: [
+        { text: 'SqueezeGrowth: +5 new monetizable articles', done: false },
+        { text: 'SqueezeGrowth: 8 refreshed', done: false },
+        { text: 'TopHumanOS: 4 pillar articles', done: false },
+        { text: 'TopHumanOS: 4 newsletters', done: false },
+        { text: 'Metrics: SG traffic stable or +5%', done: false },
+        { text: 'Metrics: THOS 100 visits/week', done: false }
+      ]
+    },
+    {
+      id: 'day60',
+      title: 'Day 60 (Nov 27, 2025)',
+      tasks: [
+        { text: 'SqueezeGrowth: 10 new + 15 refreshed money posts', done: false },
+        { text: 'TopHumanOS: 8 pillar articles', done: false },
+        { text: 'TopHumanOS: 8 newsletters', done: false },
+        { text: 'TopHumanOS: 300+ subs', done: false },
+        { text: 'Metrics: SG traffic +15%', done: false },
+        { text: 'Metrics: THOS hitting 1k/month', done: false }
+      ]
+    },
+    {
+      id: 'day90',
+      title: 'Day 90 (Dec 27, 2025)',
+      tasks: [
+        { text: 'SqueezeGrowth: 20 new + 20 refreshed posts total', done: false },
+        { text: 'TopHumanOS: 12–15 pillar articles', done: false },
+        { text: 'TopHumanOS: 12 newsletters', done: false },
+        { text: 'TopHumanOS: 1–2 backlinks', done: false },
+        { text: 'Metrics: SG revenue $2–3k/month (₹1.6–2.5 lakh)', done: false },
+        { text: 'Metrics: THOS $200–500 (₹16–41k) affiliate trickle', done: false }
+      ]
+    }
+  ];
+
+  // load or init
+  let data = JSON.parse(localStorage.getItem(KEY) || 'null') || defaultData;
+  const root = document.getElementById('checkpointsRoot');
+  const bar = document.getElementById('bar');
+  const ring = document.getElementById('ring');
+  const ringLabel = document.getElementById('ringLabel');
+  const counts = document.getElementById('counts');
+  const lastSaved = document.getElementById('lastSaved');
+  const donePct = document.getElementById('donePct');
+  const totalTasksEl = document.getElementById('totalTasks');
+  const checkpointsCount = document.getElementById('checkpointsCount');
+  const eta = document.getElementById('eta');
+
+  function save(){
+    localStorage.setItem(KEY, JSON.stringify(data));
+    lastSaved.textContent = new Date().toLocaleString();
+    updateSummary();
+  }
+
+  function resetAll(){
+    if (!confirm('Reset all progress and restore defaults?')) return;
+    data = JSON.parse(JSON.stringify(defaultData));
+    render();
+    save();
+  }
+
+  document.getElementById('resetBtn').addEventListener('click', resetAll);
+  document.getElementById('exportBtn').addEventListener('click', ()=>{
+    const blob = new Blob([JSON.stringify(data, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'progress-checkpoints.json';
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+  });
+
+  document.getElementById('addCheckpointBtn').addEventListener('click', ()=>{
+    // quick add a blank task at top of first checkpoint
+    if (!data.length) data.push({ id: 'cp_'+Date.now(), title: 'New checkpoint', tasks: [] });
+    data[0].tasks.unshift({ text: 'New task', done: false });
+    render();
+    save();
+  });
+
+  function createNode(tag, cls, inner){
+    const el = document.createElement(tag);
+    if (cls) el.className = cls;
+    if (inner !== undefined) el.innerHTML = inner;
+    return el;
+  }
+
+  function render(){
+    root.innerHTML = '';
+    data.forEach((cp, cpIndex) => {
+      const card = createNode('div','checkpoint-card');
+      const head = createNode('div','checkpoint-head');
+      const title = createNode('div','checkpoint-title', cp.title);
+      const actions = createNode('div','actions');
+
+      const addBtn = createNode('button','btn','+ add');
+      addBtn.addEventListener('click', ()=>{
+        cp.tasks.push({ text: 'New task', done: false });
+        render(); save();
+      });
+
+      const bulkDone = createNode('button','btn','Mark all done');
+      bulkDone.addEventListener('click', ()=>{
+        cp.tasks.forEach(t=> t.done = true);
+        render(); save();
+      });
+
+      const removeCp = createNode('button','btn','Delete');
+      removeCp.addEventListener('click', ()=>{
+        if (!confirm('Delete this checkpoint?')) return;
+        data.splice(cpIndex,1);
+        render(); save();
+      });
+
+      actions.appendChild(addBtn);
+      actions.appendChild(bulkDone);
+      actions.appendChild(removeCp);
+
+      head.appendChild(title);
+      head.appendChild(actions);
+      card.appendChild(head);
+
+      const list = createNode('div','task-list');
+      cp.tasks.forEach((task, tIndex) => {
+        const row = createNode('div','task-row');
+        const chk = document.createElement('input');
+        chk.type = 'checkbox';
+        chk.checked = !!task.done;
+        chk.addEventListener('change', ()=> {
+          task.done = chk.checked;
+          render(); save();
+        });
+
+        const txt = createNode('div','task-text', escapeHtml(task.text));
+        if (task.done) txt.classList.add('done');
+        txt.contentEditable = true;
+        txt.spellcheck = false;
+        txt.addEventListener('input', ()=>{
+          task.text = txt.innerText.trim();
+          save();
+        });
+        txt.addEventListener('blur', ()=> { save(); });
+
+        const remove = createNode('button','btn','-');
+        remove.addEventListener('click', ()=> {
+          cp.tasks.splice(tIndex,1);
+          render(); save();
+        });
+
+        const spark = createNode('div','spark');
+        row.appendChild(chk);
+        row.appendChild(txt);
+        row.appendChild(spark);
+        row.appendChild(remove);
+        list.appendChild(row);
+      });
+
+      // add quick input
+      const addRow = createNode('div','add-row');
+      const input = document.createElement('input');
+      input.className = 'add-input';
+      input.placeholder = 'Type new task and press Enter';
+      input.addEventListener('keydown', (e)=>{
+        if (e.key === 'Enter' && input.value.trim()){
+          cp.tasks.push({ text: input.value.trim(), done: false });
+          input.value = '';
+          render(); save();
+        }
+      });
+      addRow.appendChild(input);
+
+      card.appendChild(list);
+      card.appendChild(addRow);
+      root.appendChild(card);
+    });
+
+    updateSummary();
+  }
+
+  function updateSummary(){
+    const allTasks = data.flatMap(c=>c.tasks);
+    const total = allTasks.length;
+    const done = allTasks.filter(t=>t.done).length;
+    const pct = total ? Math.round((done/total)*100) : 0;
+
+    // update ring and bar
+    ring.style.setProperty('--p', pct + '%');
+    ringLabel.textContent = pct + '%';
+    bar.style.width = pct + '%';
+
+    counts.textContent = done + ' done · ' + total + ' total';
+    donePct.textContent = pct + '% complete';
+    totalTasksEl.textContent = total + ' tasks';
+    checkpointsCount.textContent = data.length + ' checkpoints';
+
+    // naive ETA: estimate remaining tasks / 2 per day -> days
+    const remaining = total - done;
+    const days = remaining ? Math.max(1, Math.ceil(remaining / 2)) : 0;
+    eta.textContent = days ? (days + ' days') : 'done';
+
+    // timestamp
+    lastSaved.textContent = new Date().toLocaleTimeString();
+  }
+
+  function escapeHtml(str){
+    return str.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+  }
+
+  // initial render
+  render();
+
+  // small autosave heartbeat so last saved updates
+  setInterval(()=>{ localStorage.setItem(KEY, JSON.stringify(data)); lastSaved.textContent = new Date().toLocaleTimeString(); }, 1000*10);
+
+  // expose save to console for quick testing
+  window.PC = { data, save, render };
+</script>
+</body>
+</html>
