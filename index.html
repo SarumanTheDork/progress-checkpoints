@@ -1,0 +1,103 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+  <meta http-equiv="Content-Style-Type" content="text/css">
+  <title></title>
+  <meta name="Generator" content="Cocoa HTML Writer">
+  <meta name="CocoaVersion" content="2685.1">
+  <style type="text/css">
+    p.p1 {margin: 0.0px 0.0px 0.0px 0.0px}
+    p.p2 {margin: 0.0px 0.0px 0.0px 0.0px; font: 12.0px Helvetica; min-height: 14.0px}
+    font.f1 {font: 12.0px Helvetica}
+  </style>
+</head>
+<body>
+<p class="p1"><font face="Helvetica" size="3" class="f1">&lt;!DOCTYPE html&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1">&lt;html lang="en"&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1">&lt;head&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">  </span>&lt;meta charset="UTF-8" /&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">  </span>&lt;title&gt;Progress Checkpoints&lt;/title&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">  </span>&lt;style&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>body {</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">      </span>font-family: Arial, sans-serif;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">      </span>background: #f8f9fa;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">      </span>color: #222;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">      </span>padding: 30px;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>}</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>h2 {</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">      </span>margin-top: 40px;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">      </span>color: #333;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>}</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>.checkpoint {</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">      </span>background: #fff;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">      </span>border: 1px solid #ddd;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">      </span>border-radius: 8px;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">      </span>padding: 20px;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">      </span>margin-bottom: 20px;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>}</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>.task {</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">      </span>display: flex;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">      </span>align-items: center;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">      </span>margin-bottom: 10px;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>}</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>.task input[type="checkbox"] {</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">      </span>margin-right: 10px;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">      </span>transform: scale(1.2);</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>}</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>.done {</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">      </span>text-decoration: line-through;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">      </span>color: #888;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>}</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">  </span>&lt;/style&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1">&lt;/head&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1">&lt;body&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">  </span>&lt;h1&gt;Progress Checkpoints&lt;/h1&gt;</font></p>
+<p class="p2"><br></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">  </span>&lt;div class="checkpoint"&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>&lt;h2&gt;Day 30 (Oct 28, 2025)&lt;/h2&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>&lt;div class="task"&gt;&lt;input type="checkbox" /&gt; &lt;span&gt;SqueezeGrowth: +5 new monetizable articles&lt;/span&gt;&lt;/div&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>&lt;div class="task"&gt;&lt;input type="checkbox" /&gt; &lt;span&gt;SqueezeGrowth: 8 refreshed&lt;/span&gt;&lt;/div&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>&lt;div class="task"&gt;&lt;input type="checkbox" /&gt; &lt;span&gt;TopHumanOS: 4 pillar articles&lt;/span&gt;&lt;/div&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>&lt;div class="task"&gt;&lt;input type="checkbox" /&gt; &lt;span&gt;TopHumanOS: 4 newsletters&lt;/span&gt;&lt;/div&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>&lt;div class="task"&gt;&lt;input type="checkbox" /&gt; &lt;span&gt;Metrics: SG traffic stable or +5%&lt;/span&gt;&lt;/div&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>&lt;div class="task"&gt;&lt;input type="checkbox" /&gt; &lt;span&gt;Metrics: THOS 100 visits/week&lt;/span&gt;&lt;/div&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</font></p>
+<p class="p2"><br></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">  </span>&lt;div class="checkpoint"&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>&lt;h2&gt;Day 60 (Nov 27, 2025)&lt;/h2&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>&lt;div class="task"&gt;&lt;input type="checkbox" /&gt; &lt;span&gt;SqueezeGrowth: 10 new + 15 refreshed money posts&lt;/span&gt;&lt;/div&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>&lt;div class="task"&gt;&lt;input type="checkbox" /&gt; &lt;span&gt;TopHumanOS: 8 pillar articles&lt;/span&gt;&lt;/div&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>&lt;div class="task"&gt;&lt;input type="checkbox" /&gt; &lt;span&gt;TopHumanOS: 8 newsletters&lt;/span&gt;&lt;/div&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>&lt;div class="task"&gt;&lt;input type="checkbox" /&gt; &lt;span&gt;TopHumanOS: 300+ subs&lt;/span&gt;&lt;/div&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>&lt;div class="task"&gt;&lt;input type="checkbox" /&gt; &lt;span&gt;Metrics: SG traffic +15%&lt;/span&gt;&lt;/div&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>&lt;div class="task"&gt;&lt;input type="checkbox" /&gt; &lt;span&gt;Metrics: THOS hitting 1k/month&lt;/span&gt;&lt;/div&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</font></p>
+<p class="p2"><br></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">  </span>&lt;div class="checkpoint"&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>&lt;h2&gt;Day 90 (Dec 27, 2025)&lt;/h2&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>&lt;div class="task"&gt;&lt;input type="checkbox" /&gt; &lt;span&gt;SqueezeGrowth: 20 new + 20 refreshed posts total&lt;/span&gt;&lt;/div&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>&lt;div class="task"&gt;&lt;input type="checkbox" /&gt; &lt;span&gt;TopHumanOS: 12–15 pillar articles&lt;/span&gt;&lt;/div&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>&lt;div class="task"&gt;&lt;input type="checkbox" /&gt; &lt;span&gt;TopHumanOS: 12 newsletters&lt;/span&gt;&lt;/div&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>&lt;div class="task"&gt;&lt;input type="checkbox" /&gt; &lt;span&gt;TopHumanOS: 1–2 backlinks&lt;/span&gt;&lt;/div&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>&lt;div class="task"&gt;&lt;input type="checkbox" /&gt; &lt;span&gt;Metrics: SG revenue $2–3k/month (₹1.6–2.5 lakh)&lt;/span&gt;&lt;/div&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>&lt;div class="task"&gt;&lt;input type="checkbox" /&gt; &lt;span&gt;Metrics: THOS $200–500 (₹16–41k) affiliate trickle&lt;/span&gt;&lt;/div&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">  </span>&lt;/div&gt;</font></p>
+<p class="p2"><br></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">  </span>&lt;script&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>const tasks = document.querySelectorAll('.task input');</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>tasks.forEach(box =&gt; {</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">      </span>box.addEventListener('change', () =&gt; {</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">        </span>const span = box.nextElementSibling;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">        </span>if (box.checked) {</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">          </span>span.classList.add('done');</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">        </span>} else {</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">          </span>span.classList.remove('done');</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">        </span>}</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">      </span>});</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">    </span>});</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1"><span class="Apple-converted-space">  </span>&lt;/script&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1">&lt;/body&gt;</font></p>
+<p class="p1"><font face="Helvetica" size="3" class="f1">&lt;/html&gt;</font></p>
+</body>
+</html>
